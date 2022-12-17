@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block metadescription %}
+    {{product.description|truncatewords:155}}
+{% endblock %}
+
+{% block title %}
+    {{product.name}} - OhMyG Store
+{% endblock %}
+
+{% block content %}
+
+<div class="row my_prod_row_class">
+  <div class="mx_auto">
+    <p><a href="{% url 'shop:allProdCat' %}">Home </a>| <a href="{{product.category.get_url}}">{{product.category}}</a> | {{product.name}}</p>
+  </div>
+</div>
+
+<div class="container">
+    <div class="row ">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <div style="min-width:18rem">
+                <img class="my_image" src="{{product.img.url}}" alt="{{product.name}}" height="200" width="400">
+            </div>
+        </div>
+        <br>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <div>
+                <h1 class="my_prod_title">{{product.name}}</h1>
+                <h4>₹ {{product.price}}</h4>
+                <h5 class="my_title">Description: </h5>
+                <p>{{product.desc}}</p>
+                {% if product.stock <= 0 %}
+                <h4 class=" my_prod_text"><b>Out of Stock</b></h4>
+                {% else %}
+                <h4><a class="btn btn-secondary" href="{% url 'cart:add_cart' product.id %}">Add To Cart</a></h4>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
